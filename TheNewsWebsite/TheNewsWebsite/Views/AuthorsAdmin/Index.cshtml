@@ -1,0 +1,53 @@
+﻿@model IEnumerable<TheNewsWebsite.Models.TheNewsWebsite.Author>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.getJSON("/AuthorsAdmin/GetAuthors", function (data) {
+            var tr;
+            for (var i = 0; i < data.length; i++) {
+                tr = $('<tr/>');
+                tr.append("<td>" + data[i].authorName + "</td>");
+                tr.append("<td>" + data[i].authorNumPost + "</td>");
+                tr.append("<td><a href='@Url.Action("Edit")/" +data[i].authorId + "'>Sửa</a> | <a href='@Url.Action("Details")/" + data[i].authorId + "'>Chi tiết</a> | <a href='@Url.Action("Delete")/" +
+                    data[i].authorId + "'>Xóa</a></td>");
+                $('table').append(tr);
+            }
+            $('#AuthorInfor').DataTable();
+        });
+    });
+</script>
+<div class="page-title">
+    <div>
+        <h3>Quản lý tác giả</h3>
+        <p>Danh sách</p>
+
+    </div>
+</div>
+<p>
+
+    <a asp-action="Create">Thêm tác giả</a>
+
+</p>
+<table id="AuthorInfor" class="table table-bordered table-responsive">
+    <thead>
+        <tr>
+            <th>Tên tác giả</th>
+            <th>Số bài đăng</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+
+</table>
+<p>
+    <a asp-action="ShowAll">Hiển thị đầy đủ các tác giả từng cộng tác</a>
+</p>
+@section Scripts{
+    <link href="~/Datatables/jquery.dataTables.css" rel="stylesheet" />
+    <script src="~/Datatables/jquery.dataTables.js"></script>
+}

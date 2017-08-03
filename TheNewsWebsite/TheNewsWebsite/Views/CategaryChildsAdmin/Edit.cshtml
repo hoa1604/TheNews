@@ -1,0 +1,61 @@
+﻿@model TheNewsWebsite.Models.TheNewsWebsite.CategaryChild
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="page-title">
+    <div>
+        <h3>Quản lý danh mục con</h3>
+        <p>Sửa danh mục con</p>
+
+    </div>
+</div>
+
+<form asp-action="Edit">
+    <div class="form-horizontal">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Id" />
+       
+        <div class="form-group">
+            <label asp-for="CategariesId" class="control-label col-md-2">Danh mục cha</label>
+            <div class="col-md-10">
+                <select asp-for="CategariesId" class="form-control" asp-items="ViewBag.CategariesId"></select>
+                <span asp-validation-for="CategariesId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Name" class="col-md-2 control-label">Danh mục con</label>
+            <div class="col-md-10">
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+       @{ if (ViewBag.Status==false)
+           {
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <div class="checkbox">
+                        <input asp-for="Status" checked="@Model.Status" />
+                        <label asp-for="Status">Đã đăng</label>
+                    </div>
+                </div>
+            </div>
+           }
+    }
+       
+                
+        
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Lưu" class="btn btn-success" />
+                <input class="btn btn-default" type="button" value="Bỏ qua" onclick="location.href='@Url.Action("Index", "CategaryChildsAdmin")'" />
+            </div>
+        </div>
+    </div>
+</form>
+
+@*@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}*@

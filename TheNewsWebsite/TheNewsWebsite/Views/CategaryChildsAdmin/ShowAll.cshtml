@@ -1,0 +1,56 @@
+﻿@using System.Collections.Generic
+@using Microsoft.AspNetCore.Mvc
+@model System.Collections.Generic.IEnumerable<TheNewsWebsite.Models.TheNewsWebsite.CategaryChild>
+
+    @{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+
+    <div class="page-title">
+        <div>
+            <h3>Quản lý danh mục con</h3>
+            <p>Danh sách</p>
+
+        </div>
+    </div>
+
+    <p>
+        <a asp-action="Index">Quay lại danh sách đã đăng</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Danh mục cha
+                </th>
+                <th>
+                    Danh mục con
+                </th>
+                <th>
+                    Đã đăng
+                </th>
+                <th>
+                    Thao tác
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Categaries.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    <input class="btn btn-primary" type="button" value="Sửa " onclick="location.href='@Url.Action("Edit","CategaryChildsAdmin",new{@item.Id})'"  />
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>

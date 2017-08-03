@@ -1,0 +1,56 @@
+﻿@model TheNewsWebsite.Models.TheNewsWebsite.CategaryChild
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="page-title">
+    <div>
+        <h3>Quản lý danh mục con</h3>
+        <p>Thêm mới danh mục con</p>
+
+    </div>
+</div>
+
+<form asp-action="Create">
+    <div class="form-horizontal">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="CategariesId" class="col-md-2 control-label">Danh mục cha</label>
+            <div class="col-md-10">
+                <select asp-for="CategariesId" class="form-control" asp-items="ViewBag.CategariesId"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Name" class="col-md-2 control-label">Danh mục con</label>
+            <div class="col-md-10">
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="checkbox">
+                    <input asp-for="Status" />
+                    <label asp-for="Status">Đã đăng</label>
+                </div>
+            </div>
+        </div>
+       
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Thêm" class="btn btn-success" />
+                <input class="btn btn-default" type="button" value="Bỏ qua" onclick="location.href='@Url.Action("Index", "CategaryChildsAdmin")'" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Quay lại</a>
+</div>
+
+@*@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}*@

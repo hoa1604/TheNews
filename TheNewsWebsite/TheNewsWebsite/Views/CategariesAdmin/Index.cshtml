@@ -1,0 +1,54 @@
+﻿@model IEnumerable<TheNewsWebsite.Models.TheNewsWebsite.Categary>
+
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="page-title">
+    <div>
+        <h3>Quản lý danh mục cha</h3>
+        <p>Danh sách</p>
+    
+    </div>
+</div>
+<p>
+  
+    <a asp-action="Create">Thêm danh mục</a>
+   
+</p>
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th>
+            Tên danh mục
+        </th>
+        <th>
+            Đã đăng
+        </th>
+        <th>
+            Thao tác
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                <input class="btn btn-primary" type="button" value="Sửa " onclick="location.href='@Url.Action("Edit","CategariesAdmin",new{@item.Id})'"/> 
+                <input class="btn btn-danger" type="button" value=" Xóa" onclick="location.href='@Url.Action("Delete","CategariesAdmin",new{@item.Id})'"/>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+<p>
+    <a asp-action="ShowAll">Hiển thị đầy đủ các danh mục đã ẩn</a>
+</p>

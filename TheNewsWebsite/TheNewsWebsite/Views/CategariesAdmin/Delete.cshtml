@@ -1,0 +1,40 @@
+﻿@model TheNewsWebsite.Models.TheNewsWebsite.Categary
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="page-title">
+    <div>
+        <h3>Quản lý danh mục cha</h3>
+        <p>Xóa danh mục</p>
+
+    </div>
+</div>
+
+<h3>Ẩn danh mục này thì các danh mục con cũng bị ẩn, bạn có chắc muốn ẩn đi danh mục này không?</h3>
+<div>
+    <dl class="dl-horizontal">
+        <input type="hidden" asp-for="Id" />
+        <dt>
+           Tên danh mục
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            Đã đăng
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" /> 
+            <input class="btn btn-primary" type="button" value="Bỏ qua" onclick="location.href='@Url.Action("Index","CategariesAdmin")'" />
+        </div>
+    </form>
+</div>

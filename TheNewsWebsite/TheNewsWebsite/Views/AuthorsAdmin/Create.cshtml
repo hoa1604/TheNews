@@ -1,0 +1,35 @@
+﻿@model TheNewsWebsite.Models.TheNewsWebsite.Author
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="page-title">
+    <div>
+        <h3>Quản lý tác giả</h3>
+        <p>Thêm tác giả</p>
+
+    </div>
+</div>
+<form asp-action="Create">
+    <div class="form-horizontal">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Name" class="col-md-2 control-label">Tên tác giả</label>
+            <div class="col-md-10">
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Thêm" class="btn btn-success"/>
+                <input class="btn btn-default" type="button" value="Bỏ qua" onclick="location.href='@Url.Action("Index","AuthorsAdmin")'" />
+            </div>
+        </div>
+    </div>
+</form>
+
+
+

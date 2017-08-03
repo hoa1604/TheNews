@@ -1,0 +1,54 @@
+﻿@model IEnumerable<TheNewsWebsite.Models.TheNewsWebsite.Post>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    var x = 10;
+}
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<div class="page-title">
+    <div>
+        <h3>Quản lý bài viết</h3>
+        <p>Danh sách</p>
+
+    </div>
+</div>
+<p>
+    <a asp-action="Create">Thêm bài viết</a>
+</p>
+<table id="PostsList" class="table table-bordered table-responsive">
+    <thead>
+        <tr>
+            <th class="col-sm-3">Tiêu đề</th>
+            <th class="col-sm-2">Tác giả</th>
+            <th class="col-sm-4">Mô tả</th>
+            <th class="col-sm-4">Thao tác</th>
+        </tr>
+    </thead>
+</table>
+<p>
+    <a asp-action="ShowAll">Hiển thị đầy đủ các bài viết</a>
+</p>
+@section Scripts{
+    <link href="~/Datatables/jquery.dataTables.css" rel="stylesheet" />
+    <script src="~/Datatables/jquery.dataTables.js"></script>
+   
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.getJSON("/PostsAdmin/GetPosts", function (data) {
+            var tr;
+            for (var i = 0; i < data.length; i++) {
+                tr = $('<tr/>');
+                tr.append("<td>" + data[i].postTitle + "</td>");
+                tr.append("<td>" + data[i].postAuthor + "</td>");
+                tr.append("<td>" + data[i].postDescription + "</td>");
+                tr.append("<td><a class='btn btn-warning' href='@Url.Action("Edit")/" + data[i].postId + "'>   Sửa  </a>  <a class='btn btn-info' href='@Url.Action("Details")/" + data[i].postId + "'>Chi tiết</a>  <a  class='btn btn-danger' href='@Url.Action("Delete")/" +
+                    data[i].postId + "'>Xóa</a></td>");
+                $('table').append(tr);
+            }
+            $('#PostsList').DataTable();
+        });
+    });
+</script>
+}

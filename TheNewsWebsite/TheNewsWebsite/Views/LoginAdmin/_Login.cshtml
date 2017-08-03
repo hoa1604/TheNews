@@ -1,0 +1,12 @@
+@using Microsoft.AspNetCore.Identity
+@using TheNewsWebsite.Models
+@using Microsoft.AspNetCore.Http
+
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{ 
+
+}
+<p>Hello @Context.Session.GetString("LastName") </p>
+<p class="designation"> @Context.Session.GetString("AdminName")</p>

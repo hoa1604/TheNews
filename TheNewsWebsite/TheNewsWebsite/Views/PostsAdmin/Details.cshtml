@@ -1,0 +1,109 @@
+﻿@model TheNewsWebsite.Models.TheNewsWebsite.Post
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="page-title">
+    <div>
+        <h3>Quản lý bài đăng</h3>
+        <p>Chi tiết bài đăng</p>
+    </div>
+</div>
+<div>
+
+    <table class="table detail">
+        <tr class="title">
+            <td colspan="4">
+                <h2> @Html.Raw(Model.Title)</h2>
+            </td>
+        </tr>
+        <tr>
+            <td class="col-sm-5">
+                <img src="@Model.Image" />
+            </td>
+            <td class="col-sm-1"></td>
+            <td class="col-sm-6">
+                <table>
+                    <tr>
+                        <th class="col-sm-4">
+                            Thể loại:
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.CategaryChild.Name)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-sm-4">
+                            Tác giả:
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.Author.Name)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-sm-4">
+                            Ngày tạo:
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.DateCreate)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-sm-4">
+                            Ngày đăng:
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.DatePublish)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-sm-4">
+                            Từ khóa:
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.Keyword)
+                        </td>
+                    </tr>
+                    <tr>
+
+                        <th  class="col-sm-4">
+                            Số lượt xem:
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.NumView)
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-sm-4">
+                            Trạng thái:
+                        </th>
+                        <td>
+                            @ViewBag.Status
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="col-sm-4">
+                            Đăng bởi:
+                        </th>
+                        <td>
+                            @Html.DisplayFor(model => model.PublishBy)
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="panel panel-default">
+    <div class="panel panel-heading">
+       <h3> @Html.Raw(Model.Description)</h3>
+    </div>
+    <div class="panel panel-body">
+        @Html.Raw(Model.Content)
+    </div>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

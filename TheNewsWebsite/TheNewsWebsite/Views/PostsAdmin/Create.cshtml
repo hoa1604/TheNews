@@ -1,0 +1,151 @@
+﻿@model TheNewsWebsite.Models.TheNewsWebsite.Post
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/tinymce_4.6.4_dev/tinymce/js/tinymce/tinymce.min.js"></script>
+<div class="page-title">
+    <div>
+        <h3>Quản lý bài đăng</h3>
+        <p>Thêm mới bài đăng</p>
+    </div>
+</div>
+<form method="post" enctype="multipart/form-data" asp-action="Create">
+    <div class="form-horizontal">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">Danh mục cha</label>
+            <div class="col-md-10">
+                <select id="categary" name="categary" class="form-control" asp-items="ViewBag.Cate"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="CategaryChildId" class="col-md-2 control-label">Danh mục con</label>
+            <div class="col-md-10">
+                <select id="CategaryChildId" name="CategaryChildId" asp-for="CategaryChildId" class="form-control" asp-items="ViewBag.CategaryChildId"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Title" class="col-md-2 control-label">Tiêu đề</label>
+            <div class="col-md-10">
+                <input asp-for="Title" class="form-control"/>
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="AuthorId" class="col-md-2 control-label">Tác giả</label>
+            <div class="col-md-10">
+                <select asp-for="AuthorId" class="form-control" asp-items="ViewBag.AuthorId"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Description" class="col-md-2 control-label">Mô tả</label>
+            <div class="col-md-10">
+                <input asp-for="Description" class="form-control"/>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Content" class="col-md-2 control-label">Nội dung</label>
+            <div class="col-md-10">
+                <textarea id="elm1" name="Content" asp-for="Content" class="form-control"></textarea>
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Image" class="col-md-2 control-label">Ảnh</label>
+            <div class="col-md-10">
+                <input asp-for="Image" class="form-control" type="file" name="Image" multiple />
+            </div>
+        </div>
+        @*<div class="form-group">
+                <label asp-for="DateCreate" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="DateCreate" class="form-control" />
+                    <span asp-validation-for="DateCreate" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="DatePublish" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="DatePublish" class="form-control" />
+                    <span asp-validation-for="DatePublish" class="text-danger"></span>
+                </div>
+            </div>*@
+
+        <div class="form-group">
+            <label asp-for="Keyword" class="col-md-2 control-label">Từ khóa</label>
+            <div class="col-md-10">
+                <input asp-for="Keyword" class="form-control" />
+                <span asp-validation-for="Keyword" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Status" class="col-md-2 control-label">Tình trạng</label>
+            <div class="col-md-10">
+                <select asp-for="Status" class="form-control" asp-items="ViewBag.Status"> </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="PublishBy" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="PublishBy" class="form-control" />
+                <span asp-validation-for="PublishBy" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Thêm bài viết" class="btn btn-warning" />
+                <input class="btn btn-primary" type="button" value="Bỏ qua" onclick="location.href='@Url.Action("Index","PostsAdmin")'" />
+            </div>
+        </div>
+    </div>
+</form>
+@section Scripts{
+    <script>
+        $('#categary').change(function () {
+            var cateId = $('#categary :selected').val();
+            var select = $('#CategaryChildId');
+            select.find('option').remove();
+            $.ajax({
+                url: '@Url.Action("Categary")',
+            method: 'POST',
+            data: { "cateId": cateId },
+            success: function (resp) {
+                $.each(resp, function (index, value) {
+                    select.append('<option value="' + value.id + '">' + value.name + '</option>');
+                        });
+                   //console.log(resp);
+                }
+    });
+        });
+    </script>
+    @*<script>tinymce.init({ selector: 'textarea' });</script>*@ 
+<script>
+        tinymce.init({
+            selector: "textarea#elm1",
+            theme: "modern",
+            width: 900,
+            height: 300,
+            plugins: [
+                "advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
+                "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+                "save table contextmenu directionality emoticons template paste textcolor"
+            ],
+            //content_css: "css/content.css",
+            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons",
+            style_formats: [
+                { title: 'Bold text', inline: 'b' },
+                { title: 'Red text', inline: 'span', styles: { color: '#ff0000' } },
+                { title: 'Red header', block: 'h1', styles: { color: '#ff0000' } },
+                { title: 'Example 1', inline: 'span', classes: 'example1' },
+                { title: 'Example 2', inline: 'span', classes: 'example2' },
+                { title: 'Table styles' },
+                { title: 'Table row 1', selector: 'tr', classes: 'tablerow1' }
+            ]
+        });
+</script>  
+}

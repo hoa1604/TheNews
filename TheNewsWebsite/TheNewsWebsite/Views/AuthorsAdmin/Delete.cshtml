@@ -1,0 +1,48 @@
+﻿@using TheNewsWebsite.Models.TheNewsWebsite;
+@model Author
+
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    TheNewsContext db = new TheNewsContext();
+}
+
+<div class="page-title">
+    <div>
+        <h3>Quản lý tác giả</h3>
+        <p>Xóa tác giả</p>
+
+    </div>
+</div>
+<h3>Bạn có chắc muốn xóa tác giả này không?</h3>
+<div>
+    <dl class="dl-horizontal">
+        <input type="hidden" asp-for="Id" />
+        <dt>
+            Tên tác giả
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            Số bài đăng
+        </dt>
+        <dd>
+            @Model.Posts.Count()
+        </dd>
+        <dt>
+            Tình trạng
+        </dt>
+        <dd>
+            @ViewBag.Status
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <div class="form-actions no-color">
+            <input type="submit" value="Xóa" class="btn btn-danger" /> |
+            <input class="btn btn-default" type="button" value="Quay lại" onclick="location.href='@Url.Action("Index","AuthorsAdmin")'" />
+        </div>
+    </form>
+</div>

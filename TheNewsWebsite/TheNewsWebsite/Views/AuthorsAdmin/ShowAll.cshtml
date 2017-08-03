@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewData["Title"] = "ShowAll";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.getJSON("GetAllAuthors", function (data) {
+            var tr;
+            for (var i = 0; i < data.length; i++) {
+                tr = $('<tr/>');
+                tr.append("<td>" + data[i].authorName + "</td>");
+                tr.append("<td>" + data[i].authorNumPost + "</td>");
+                tr.append("<td><a href='Edit/" +data[i].authorId + "'>Sửa</a> | <a href='Details/" + data[i].authorId + "'>Chi tiết</a>");
+                $('table').append(tr);
+            }
+            $('#AuthorInfor').DataTable();
+        });
+    });
+</script>
+<div class="page-title">
+    <div>
+        <h3>Quản lý tác giả</h3>
+        <p>Danh sách</p>
+
+    </div>
+</div>
+<p>
+
+    <a href="~/AuthorsAdmin/Index"> Quay lại danh sách</a>
+
+</p>
+<table id="AuthorInfor" class="table table-bordered table-responsive">
+    <thead>
+        <tr>
+            <th>Tên tác giả</th>
+            <th>Số bài đăng</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+
+</table>
+@section Scripts{
+    <link href="~/Datatables/jquery.dataTables.css" rel="stylesheet" />
+    <script src="~/Datatables/jquery.dataTables.js"></script>
+}
