@@ -8,8 +8,8 @@ using TheNewsWebsite.Models.TheNewsWebsite;
 namespace TheNewsWebsite.Migrations
 {
     [DbContext(typeof(TheNewsContext))]
-    [Migration("20170720043847_TheNews")]
-    partial class TheNews
+    [Migration("20170804023110_MyMigration")]
+    partial class MyMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -22,11 +22,15 @@ namespace TheNewsWebsite.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("Authority");
+
                     b.Property<string>("Name");
 
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasMaxLength(50);
+
+                    b.Property<int>("Status");
 
                     b.Property<string>("Username")
                         .IsRequired();
@@ -42,8 +46,6 @@ namespace TheNewsWebsite.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name");
-
-                    b.Property<int>("NumPost");
 
                     b.Property<int>("Status");
 

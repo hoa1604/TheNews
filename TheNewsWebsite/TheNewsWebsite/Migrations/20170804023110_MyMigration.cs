@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace TheNewsWebsite.Migrations
 {
-    public partial class TheNews : Migration
+    public partial class MyMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,8 +15,10 @@ namespace TheNewsWebsite.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Authority = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Password = table.Column<string>(maxLength: 50, nullable: false),
+                    Status = table.Column<bool>(nullable: false),
                     Username = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -31,7 +33,6 @@ namespace TheNewsWebsite.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
-                    NumPost = table.Column<int>(nullable: false),
                     Status = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -59,12 +60,12 @@ namespace TheNewsWebsite.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Avatar = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: false),
+                   Email = table.Column<string>(nullable: false),
                     Gender = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
                     Password = table.Column<string>(maxLength: 50, nullable: false),
-                    Status = table.Column<string>(nullable: true)
+                    Status = table.Column<int>(nullable: false),
+                    DateCreate=table.Column<DateTime>(nullable:false)
                 },
                 constraints: table =>
                 {
@@ -151,8 +152,9 @@ namespace TheNewsWebsite.Migrations
                     Cmt = table.Column<string>(nullable: true),
                     CmtDate = table.Column<DateTime>(nullable: false),
                     PostId = table.Column<int>(nullable: false),
-                    Status = table.Column<string>(nullable: true),
-                    UserId = table.Column<int>(nullable: false)
+                    Status = table.Column<int>(nullable: true),
+                    UserId = table.Column<int>(nullable: false),
+                    Content = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

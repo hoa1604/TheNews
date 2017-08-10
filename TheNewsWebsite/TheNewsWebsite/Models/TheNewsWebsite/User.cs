@@ -17,9 +17,8 @@ namespace TheNewsWebsite.Models.TheNewsWebsite
         [Required]
         [StringLength(50, MinimumLength = 6, ErrorMessage = "Mật khẩu từ 6-50 ký tự")]
         public string Password { get; set; }
-        public string Avatar { get; set; }
-        public string Status { get; set; }
-
+        public int Status { get; set; }
+        public DateTime DateCreate { get; set; }
         public List<Comment> Comments { get; set; }
     }
 }

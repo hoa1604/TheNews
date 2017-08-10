@@ -21,9 +21,13 @@ namespace TheNewsWebsite.Controllers
         // GET: Admins
         public async Task<IActionResult> Index()
         {
+            var list = from s in _context.Admins where s.Status == true select s;
+            return View(list.ToList());
+        }
+        public async Task<IActionResult> ShowAll()
+        {
             return View(await _context.Admins.ToListAsync());
         }
-
         // GET: Admins/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -31,7 +35,6 @@ namespace TheNewsWebsite.Controllers
             {
                 return NotFound();
             }
-
             var admin = await _context.Admins
                 .SingleOrDefaultAsync(m => m.Id == id);
             if (admin == null)
@@ -43,8 +46,24 @@ namespace TheNewsWebsite.Controllers
         }
 
         // GET: Admins/Create
+        public struct ListAuthority
+        {
+            public ListAuthority(int id, string name)
+            {
+                Id = id;
+                Name = name;
+            }
+            public int Id { get; set; }
+            public string Name { get; set; }
+        }
         public IActionResult Create()
         {
+            List<ListAuthority> authority = new List<ListAuthority>()
+            {
+                new ListAuthority{Id=1,Name="Super Admin"},
+                new ListAuthority{Id=0,Name="Admin"},
+            };
+            ViewBag.Authority = new SelectList(authority.ToList(), "Id", "Name");
             return View();
         }
 
@@ -53,14 +72,21 @@ namespace TheNewsWebsite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Username,Password,Name")] Admin admin)
+        public async Task<IActionResult> Create([Bind("Id,Username,Password,Name,Authority")] Admin admin)
         {
             if (ModelState.IsValid)
             {
+                admin.Status = true;
                 _context.Add(admin);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
+            List<ListAuthority> authority = new List<ListAuthority>()
+            {
+                new ListAuthority{Id=1,Name="Super Admin"},
+                new ListAuthority{Id=0,Name="Admin"},
+            };
+            ViewBag.Authority = new SelectList(authority.ToList(), "Id", "Name",admin.Authority);
             return View(admin);
         }
 
@@ -77,6 +103,12 @@ namespace TheNewsWebsite.Controllers
             {
                 return NotFound();
             }
+            List<ListAuthority> authority = new List<ListAuthority>()
+            {
+                new ListAuthority{Id=1,Name="Super Admin"},
+                new ListAuthority{Id=0,Name="Admin"},
+            };
+            ViewBag.Authority = new SelectList(authority.ToList(), "Id", "Name", admin.Authority);
             return View(admin);
         }
 
@@ -85,7 +117,7 @@ namespace TheNewsWebsite.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Username,Password,Name")] Admin admin)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Username,Password,Name,Authority,Status")] Admin admin)
         {
             if (id != admin.Id)
             {
@@ -112,6 +144,12 @@ namespace TheNewsWebsite.Controllers
                 }
                 return RedirectToAction("Index");
             }
+            List<ListAuthority> authority = new List<ListAuthority>()
+            {
+                new ListAuthority{Id=1,Name="Super Admin"},
+                new ListAuthority{Id=0,Name="Admin"},
+            };
+            ViewBag.Authority = new SelectList(authority.ToList(), "Id", "Name", admin.Authority);
             return View(admin);
         }
 

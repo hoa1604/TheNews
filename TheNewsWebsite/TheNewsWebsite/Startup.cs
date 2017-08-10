@@ -88,14 +88,14 @@ namespace TheNewsWebsite
             app.UseSession();
             app.UseIdentity();
             //authorize
-            //app.UseCookieAuthentication(new CookieAuthenticationOptions
-            //{
-            //    AuthenticationScheme = "Cookie",
-            //    LoginPath = new PathString("/LoginAdmin/Login/"),
-            //    AccessDeniedPath = new PathString("/PostsAdmin/Index/"),
-            //    AutomaticAuthenticate = true,
-            //    AutomaticChallenge = true
-            //});
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                AuthenticationScheme = "Cookie",
+                LoginPath = new PathString("/LoginAdmin/Login/"),
+                AccessDeniedPath = new PathString("/PostsAdmin/Index/"),
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true
+            });
             // Add external authentication middleware below. To configure them please see https://go.microsoft.com/fwlink/?LinkID=532715
 
             app.UseMvc(routes =>

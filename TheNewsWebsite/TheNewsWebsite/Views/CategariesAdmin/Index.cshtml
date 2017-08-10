@@ -1,6 +1,5 @@
-﻿@model IEnumerable<TheNewsWebsite.Models.TheNewsWebsite.Categary>
-
-
+﻿@using Microsoft.AspNetCore.Http
+@model IEnumerable<TheNewsWebsite.Models.TheNewsWebsite.Categary>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
@@ -10,13 +9,10 @@
     <div>
         <h3>Quản lý danh mục cha</h3>
         <p>Danh sách</p>
-    
     </div>
 </div>
 <p>
-  
     <a asp-action="Create">Thêm danh mục</a>
-   
 </p>
 <table class="table table-bordered">
     <thead>
@@ -49,6 +45,9 @@
 }
     </tbody>
 </table>
-<p>
-    <a asp-action="ShowAll">Hiển thị đầy đủ các danh mục đã ẩn</a>
-</p>
+@if (@Context.Session.GetInt32("Authority") == 1)
+{
+    <p>
+        <a asp-action="ShowAll">Hiển thị đầy đủ các danh mục đã ẩn</a>
+    </p>
+}

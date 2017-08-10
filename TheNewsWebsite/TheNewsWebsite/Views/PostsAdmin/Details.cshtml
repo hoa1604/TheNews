@@ -4,6 +4,19 @@
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+<script>
+    function DeleteComment() {
+            var id = $("#deleteBtn").attr("data-id");
+            $.ajax({
+                url: '@Url.Action("Delete","CommentsAdmin")',
+                method: 'POST',
+                data: { "id": id },
+                success: function () {
+                    location.reload();
+                }
+            });
+    };
+</script>
 <div class="page-title">
     <div>
         <h3>Quản lý bài đăng</h3>
@@ -67,7 +80,7 @@
                     </tr>
                     <tr>
 
-                        <th  class="col-sm-4">
+                        <th class="col-sm-4">
                             Số lượt xem:
                         </th>
                         <td>
@@ -97,13 +110,28 @@
 </div>
 <div class="panel panel-default">
     <div class="panel panel-heading">
-       <h3> @Html.Raw(Model.Description)</h3>
+        <h3> @Html.Raw(Model.Description)</h3>
     </div>
     <div class="panel panel-body">
         @Html.Raw(Model.Content)
     </div>
+    <div class="panel panel-footer">
+        <h2>Bình luận</h2>
+        @foreach (var item in ViewBag.Comment)
+            {
+            <p class="comment-user">
+                @item.User.Name <span style="color:black">@item.CmtDate</span>
+            </p>
+            <p>
+                @item.Cmt
+                <br />
+                <input id="deleteBtn" class="btn btn-danger" type="button" onclick="DeleteComment()" value="Xóa" data-id=@item.Id></input>  
+            </p>
+        }
+
+    </div>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <input class="btn btn-warning" type="button" value="Sửa " onclick="location.href='@Url.Action("Edit","PostsAdmin",new{@Model.Id})'" />
+    <input class="btn btn-default" type="button" value="Quay lại" onclick="location.href='@Url.Action("Index","PostsAdmin")'" />
 </div>

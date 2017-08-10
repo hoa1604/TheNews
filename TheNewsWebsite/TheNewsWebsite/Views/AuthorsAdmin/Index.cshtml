@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<TheNewsWebsite.Models.TheNewsWebsite.Author>
-
+@using Microsoft.AspNetCore.Http
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
@@ -44,9 +44,14 @@
     </thead>
 
 </table>
-<p>
-    <a asp-action="ShowAll">Hiển thị đầy đủ các tác giả từng cộng tác</a>
-</p>
+@if (@Context.Session.GetInt32("Authority") == 1)
+{
+    <p>
+        <a asp-action="ShowAll">Hiển thị đầy đủ các tác giả từng cộng tác</a>
+    </p>
+}
+
+
 @section Scripts{
     <link href="~/Datatables/jquery.dataTables.css" rel="stylesheet" />
     <script src="~/Datatables/jquery.dataTables.js"></script>

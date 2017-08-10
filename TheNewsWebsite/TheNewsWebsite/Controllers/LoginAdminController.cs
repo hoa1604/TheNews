@@ -37,6 +37,7 @@ namespace TheNewsWebsite.Controllers
                 {
                     HttpContext.Session.SetInt32("Admin", admin.Id);
                     HttpContext.Session.SetString("AdminName", admin.Name);
+                    HttpContext.Session.SetInt32("Authority", admin.Authority);
                     string fullName = admin.Name.ToString();
                     string[] name = fullName.Split(' ');
                     HttpContext.Session.SetString("LastName", name[name.Length - 1]);
@@ -45,7 +46,7 @@ namespace TheNewsWebsite.Controllers
                 else
                 {
                     return View("Login");
-                    ViewBag.Logie4n = "Mật khẩu không chính xác!";
+                    ViewBag.Login = "Mật khẩu không chính xác!";
                 }
             }
             catch (Exception)

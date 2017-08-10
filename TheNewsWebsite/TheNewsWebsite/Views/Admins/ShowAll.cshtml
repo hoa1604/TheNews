@@ -12,7 +12,7 @@
     </div>
 </div>
 <p>
-    <a asp-action="Create">Thêm quản trị viên</a>
+    <a asp-action="Index">Quay lại danh sách</a>
 </p>
 <table class="table table-bordered">
     <thead>
@@ -58,14 +58,9 @@
 
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
-
-<p>
-    <a asp-action="ShowAll">Hiển thị đầy đủ các quản trị viên từng hoạt động</a>
-</p>

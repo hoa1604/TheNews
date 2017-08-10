@@ -15516,3 +15516,6 @@ be a descendant of the grid when it is being dragged.
     height: 150px;
     padding-left:40%;
 }
+.comment-user{
+  color :dodgerblue
+}

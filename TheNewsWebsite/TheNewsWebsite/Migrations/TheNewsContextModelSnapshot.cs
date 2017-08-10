@@ -21,11 +21,15 @@ namespace TheNewsWebsite.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("Authority");
+
                     b.Property<string>("Name");
 
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasMaxLength(50);
+
+                    b.Property<int>("Status");
 
                     b.Property<string>("Username")
                         .IsRequired();

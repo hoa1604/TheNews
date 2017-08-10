@@ -1,48 +1,53 @@
-@model TheNewsWebsite.Models.TheNewsWebsite.Admin
+﻿@model TheNewsWebsite.Models.TheNewsWebsite.Admin
 
 @{
     ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
+<div class="page-title">
+    <div>
+        <h3>Quản lý quản trị viên</h3>
+        <p>Sửa thông tin quản trị viên</p>
 
-<h2>Edit</h2>
-
+    </div>
+</div>
 <form asp-action="Edit">
     <div class="form-horizontal">
-        <h4>Admin</h4>
-        <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <input type="hidden" asp-for="Id" />
         <div class="form-group">
-            <label asp-for="Username" class="col-md-2 control-label"></label>
+            <label asp-for="Username" class="col-md-2 control-label">Tên đăng nhập</label>
             <div class="col-md-10">
                 <input asp-for="Username" class="form-control" />
                 <span asp-validation-for="Username" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="Password" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Name" class="col-md-2 control-label"></label>
+            <label asp-for="Name" class="col-md-2 control-label">Tên người dùng</label>
             <div class="col-md-10">
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
         </div>
         <div class="form-group">
+            <label asp-for="Authority" class="col-md-2 control-label">Quyền hạn</label>
+            <div class="col-md-10">
+                <select asp-for="Authority" class="form-control" asp-items="ViewBag.Authority"> </select>
+            </div>
+        </div>
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <div class="checkbox">
+                    <input asp-for="Status" />
+                    <label asp-for="Status">Đang hoạt động</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Thêm" class="btn btn-success" />
+                <input class="btn btn-default" type="button" value="Bỏ qua" onclick="location.href='@Url.Action("Index","Admins")'" />
             </div>
         </div>
     </div>
 </form>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-

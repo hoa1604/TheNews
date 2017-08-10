@@ -1,4 +1,5 @@
-﻿@model IEnumerable<TheNewsWebsite.Models.TheNewsWebsite.Post>
+﻿@using Microsoft.AspNetCore.Http
+@model IEnumerable<TheNewsWebsite.Models.TheNewsWebsite.Post>
 
 @{
     ViewData["Title"] = "Index";
@@ -27,9 +28,13 @@
         </tr>
     </thead>
 </table>
-<p>
-    <a asp-action="ShowAll">Hiển thị đầy đủ các bài viết</a>
-</p>
+@if (@Context.Session.GetInt32("Authority") == 1)
+{
+    <p>
+        <a asp-action="ShowAll">Hiển thị đầy đủ các bài viết</a>
+    </p>
+}
+
 @section Scripts{
     <link href="~/Datatables/jquery.dataTables.css" rel="stylesheet" />
     <script src="~/Datatables/jquery.dataTables.js"></script>

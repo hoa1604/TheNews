@@ -89,14 +89,6 @@
         </div>
 
         <div class="form-group">
-            <label asp-for="PublishBy" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="PublishBy" class="form-control" />
-                <span asp-validation-for="PublishBy" class="text-danger"></span>
-            </div>
-        </div>
-
-        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Thêm bài viết" class="btn btn-warning" />
                 <input class="btn btn-primary" type="button" value="Bỏ qua" onclick="location.href='@Url.Action("Index","PostsAdmin")'" />

@@ -17,7 +17,7 @@ namespace TheNewsWebsite.Controllers
 {
     public class PostsAdminController : Controller
     {
-       
+
         private readonly TheNewsContext _context;
         private readonly IHostingEnvironment _environment;
         public PostsAdminController(TheNewsContext context, IHostingEnvironment environment)
@@ -31,10 +31,9 @@ namespace TheNewsWebsite.Controllers
         {
             //  var theNewsContext = _context.Posts.Include(p => p.Author).Include(p => p.CategaryChild);
             //  return View(await theNewsContext.ToListAsync());
-            ViewData["ViewData"] = 9;
+            //ViewData["ViewData"] = 9;
             return View();
         }
-        [HttpGet]
         public JsonResult GetPosts()
         {
             var posts = from s in _context.Posts.OrderByDescending(s => s.DateCreate) where (s.Status != 4) select s;
@@ -75,7 +74,24 @@ namespace TheNewsWebsite.Controllers
             var post = await _context.Posts
                 .Include(p => p.Author)
                 .Include(p => p.CategaryChild)
+                .Include(p=>p.Comments)
                 .SingleOrDefaultAsync(m => m.Id == id);
+            //  post.Comments
+            List<Comment> comments = _context.Comments.Include(s => s.User).Where(s => s.PostId == id).Select(s => new Comment
+            {
+                User = s.User,
+                Cmt = s.Cmt,
+                Id = s.Id,
+                CmtDate=s.CmtDate
+            }).ToList();
+            //List<Comment> comments = from s in _context.Comments.Include(s => s.User)
+            //                         where (s.PostId == id)
+            //                         select (s => new Comment
+            //                         {
+
+            //                         });
+            ViewBag.Comment = comments;
+            // ViewData["Comment"] = comments;
             if (post == null)
             {
                 return NotFound();
@@ -157,8 +173,16 @@ namespace TheNewsWebsite.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,Content,DateCreate,DatePublish,NumView,Keyword,Status,CategaryChildId,PublishBy,AuthorId")] Post post, IFormFile Image)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,Content,DateCreate,DatePublish,NumView,Keyword,Status,CategaryChildId,AuthorId")] Post post, IFormFile Image)
         {
+            if (HttpContext.Session.GetInt32("Admin") != null)
+            {
+                post.PublishBy = HttpContext.Session.GetInt32("Admin").Value;
+            }
+            else
+            {
+                post.PublishBy = 0;
+            }
             if (ModelState.IsValid)
             {
                 if (Image != null && Image.Length > 0)
@@ -183,7 +207,7 @@ namespace TheNewsWebsite.Controllers
                 // var auth = from s in _context.Authors where s.Id == post.Author.Id select s;
                 //var auth = _context.Authors.SingleOrDefault(s => s.Id == post.AuthorId);
                 //auth.NumPost = auth.NumPost + 1;
-             //   _context.Update(auth);
+                //   _context.Update(auth);
                 try { await _context.SaveChangesAsync(); }
                 catch (Exception ex)
                 {
@@ -252,7 +276,7 @@ namespace TheNewsWebsite.Controllers
             }
             else
             {
-                Post currentPost =await _context.Posts.AsNoTracking().SingleOrDefaultAsync(s => s.Id == id);
+                Post currentPost = await _context.Posts.AsNoTracking().SingleOrDefaultAsync(s => s.Id == id);
 
 
                 if (ModelState.IsValid)
@@ -277,9 +301,9 @@ namespace TheNewsWebsite.Controllers
                     {
                         post.Image = currentPost.Image;
                     }
-              
 
-                try
+
+                    try
                     {
                         _context.Update(post);
                         await _context.SaveChangesAsync();
@@ -323,7 +347,6 @@ namespace TheNewsWebsite.Controllers
             {
                 return NotFound();
             }
-
             var post = await _context.Posts
                 .Include(p => p.Author)
                 .Include(p => p.CategaryChild)
@@ -332,7 +355,6 @@ namespace TheNewsWebsite.Controllers
             {
                 return NotFound();
             }
-
             return View(post);
         }
 

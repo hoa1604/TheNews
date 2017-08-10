@@ -1,0 +1,46 @@
+﻿@model IEnumerable<TheNewsWebsite.Models.TheNewsWebsite.Comment>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.getJSON("/CommentsAdmin/GetComments", function (data) {
+            var tr;
+            for (var i = 0; i < data.length; i++) {
+                tr = $('<tr/>');
+                tr.append("<td>" + data[i].cmtContent + "</td>");
+                tr.append("<td>" + data[i].cmtPost + "</td>");
+                tr.append("<td>" + data[i].cmtUser + "</td>");
+                tr.append("<td><a href='@Url.Action("Details","PostsAdmin")/" + data[i].cmtPostId + "'>Chi tiết</a> | <a href='@Url.Action("Delete")/" +
+                    data[i].cmtId + "'>Xóa</a></td>");
+                $('table').append(tr);
+            }
+            $('#CommentInfor').DataTable();
+        });
+    });
+</script>
+<div class="page-title">
+    <div>
+        <h3>Quản lý bình luận</h3>
+        <p>Danh sách bình luận</p>
+
+    </div>
+</div>
+<table id="CommentInfor" class="table table-bordered table-responsive">
+    <thead>
+        <tr>
+            <th>Bình luận</th>
+            <th>Bài viết </th>
+            <th>Độc giả</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+</table>
+@section Scripts{
+    <link href="~/Datatables/jquery.dataTables.css" rel="stylesheet" />
+    <script src="~/Datatables/jquery.dataTables.js"></script>
+}

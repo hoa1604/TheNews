@@ -8,10 +8,6 @@ namespace TheNewsWebsite.Models.TheNewsWebsite
 {
     public class TheNewsContext : DbContext
     {
-        public TheNewsContext()
-        {
-
-        }
         public TheNewsContext(DbContextOptions<TheNewsContext> options)
             : base(options)
         { }
@@ -21,7 +17,6 @@ namespace TheNewsWebsite.Models.TheNewsWebsite
         public DbSet<Categary> Categaries { get; set; }
         public DbSet<CategaryChild> CategaryChilds { get; set; }
         public DbSet<Comment> Comments { get; set; }
-
         public DbSet<Post> Posts { get; set; }
 
         public DbSet<User> Users { get; set; }

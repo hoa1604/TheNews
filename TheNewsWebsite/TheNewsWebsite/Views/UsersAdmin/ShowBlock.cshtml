@@ -1,0 +1,51 @@
+﻿@model IEnumerable<TheNewsWebsite.Models.TheNewsWebsite.User>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.getJSON("/UsersAdmin/GetBlockUsers", function (data) {
+            var tr;
+            for (var i = 0; i < data.length; i++) {
+                tr = $('<tr/>');
+                tr.append("<td>" + data[i].userName + "</td>");
+                tr.append("<td>" + data[i].userGender + "</td>");
+                tr.append("<td>" + data[i].userEmail + "</td>");
+                tr.append("<td><a href='@Url.Action("Unlock")/" + data[i].userId + "'>Mở khóa</a> | <a href='@Url.Action("Details")/" + data[i].userId + "'>Chi tiết</a> </td>");
+                $('table').append(tr);
+            }
+            $('#UserInfor').DataTable();
+        });
+    });
+</script>
+<div class="page-title">
+    <div>
+        <h3>Quản lý độc giả</h3>
+        <p>Danh sách độc giả</p>
+
+    </div>
+</div>
+<p>
+    <a asp-action="Index">Hiển thị các tài khoản đang hoạt động</a>
+</p>
+
+<table id="UserInfor" class="table table-bordered table-responsive">
+    <thead>
+        <tr>
+            <th>Tên độc giả</th>
+            <th>Giới tính</th>
+            <th>Email</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+
+</table>
+
+@section Scripts{
+    <link href="~/Datatables/jquery.dataTables.css" rel="stylesheet" />
+    <script src="~/Datatables/jquery.dataTables.js"></script>
+}

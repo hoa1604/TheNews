@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace TheNewsWebsite.Controllers
 {
-    [Authorize]
     public class CategariesAdminController : Controller
     {
 

@@ -1,5 +1,6 @@
 ﻿@using System.Collections.Generic
 @using Microsoft.AspNetCore.Mvc
+@using Microsoft.AspNetCore.Http
 @model List<TheNewsWebsite.Models.TheNewsWebsite.CategaryChild>
 
 @{
@@ -56,6 +57,9 @@
 }
     </tbody>
 </table>
-<p>
-    <a asp-action="ShowAll">Hiển thị đầy đủ các danh mục đã ẩn</a>
-</p>
+@if (@Context.Session.GetInt32("Authority") == 1)
+{
+    <p>
+        <a asp-action="ShowAll">Hiển thị đầy đủ các danh mục đã ẩn</a>
+    </p>
+}
